@@ -41,6 +41,7 @@ namespace Inedo.BuildMasterExtensions.Jenkins
                 return wc.DownloadString(downloafUrl);
             }
         }
+
         private void Post(string url)
         {
             if (string.IsNullOrEmpty(this.config.ServerUrl))
@@ -53,6 +54,7 @@ namespace Inedo.BuildMasterExtensions.Jenkins
                 wc.UploadString(uploafUrl, string.Empty);
             }
         }
+
         private void Download(string url, string toFileName)
         {
             if (string.IsNullOrEmpty(this.config.ServerUrl))
@@ -68,7 +70,8 @@ namespace Inedo.BuildMasterExtensions.Jenkins
 
         public string[] GetJobNames()
         {
-            var xml = this.Get("/view/All/api/xml");
+            string defaultViewPath = config.DefaultViewPath ?? "/view/All/api/xml";
+            var xml = this.Get(defaultViewPath);
             if (xml == null) return new string[0];
             return XDocument.Parse(xml)
                 .Element("allView")

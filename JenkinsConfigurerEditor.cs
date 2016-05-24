@@ -9,6 +9,7 @@ namespace Inedo.BuildMasterExtensions.Jenkins
         private ValidatingTextBox txtServerUrl;
         private ValidatingTextBox txtUsername;
         private PasswordTextBox txtPassword;
+        private ValidatingTextBox txtDefaultViewPath;
 
         public override void InitializeDefaultValues()
         {
@@ -24,6 +25,7 @@ namespace Inedo.BuildMasterExtensions.Jenkins
                 this.txtUsername.Text = configurer.Username;
                 this.txtPassword.Text = configurer.Password;
             }
+            this.txtDefaultViewPath.Text = configurer.DefaultViewPath;
         }
 
 
@@ -38,6 +40,10 @@ namespace Inedo.BuildMasterExtensions.Jenkins
                 configurer.Username = this.txtUsername.Text;
                 configurer.Password = this.txtPassword.Text;
             }
+            if (!string.IsNullOrEmpty(this.txtDefaultViewPath.Text))
+            {
+                configurer.DefaultViewPath = this.txtDefaultViewPath.Text;
+            }
 
             return configurer;
         }
@@ -47,12 +53,13 @@ namespace Inedo.BuildMasterExtensions.Jenkins
             this.txtServerUrl = new ValidatingTextBox { Required = true };
             this.txtUsername = new ValidatingTextBox { DefaultText = "Anonymous" };
             this.txtPassword = new PasswordTextBox();
+            this.txtDefaultViewPath = new ValidatingTextBox { DefaultText = "/view/All/api/xml" };
 
             this.Controls.Add(
-                new SlimFormField("Server URL:", this.txtServerUrl)
-                { HelpText = "This should be the base url that you use to access Jenkins; for example, http://myjenkinsbox.local:8080" },
+                new SlimFormField("Server URL:", this.txtServerUrl) { HelpText = "This should be the base url that you use to access Jenkins; for example, http://myjenkinsbox.local:8080" },
                 new SlimFormField("Username:", this.txtUsername),
-                new SlimFormField("API Token / Password", this.txtPassword) { HelpText = "For Jenkins version 1.426 and higher enter the API Token value as the password" }
+                new SlimFormField("API Token / Password", this.txtPassword) { HelpText = "For Jenkins version 1.426 and higher enter the API Token value as the password" },
+                new SlimFormField("Default view path", this.txtDefaultViewPath) { HelpText = "Only change this for non-English installations of Jenkins" }
             );
         }
     }

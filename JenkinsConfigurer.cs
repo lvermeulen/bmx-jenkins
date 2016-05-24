@@ -20,6 +20,9 @@ namespace Inedo.BuildMasterExtensions.Jenkins
         [Persistent(Encrypted = true)]
         public string Password { get; set; }
 
+        [Persistent]
+        public string DefaultViewPath { get; set; }
+
         public string BaseUrl => (this.ServerUrl ?? "").TrimEnd('/');
     }
 }
